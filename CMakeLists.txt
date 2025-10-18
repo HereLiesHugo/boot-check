@@ -1,0 +1,21 @@
+cmake_minimum_required(VERSION 3.10)
+project(BootParameterChecker)
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Add executable
+add_executable(BootCheck WIN32 main.cpp)
+
+# Link required Windows libraries
+target_link_libraries(BootCheck 
+    comctl32
+    tbs
+)
+
+# Set subsystem to Windows (GUI application)
+if(MSVC)
+    set_target_properties(BootCheck PROPERTIES
+        LINK_FLAGS "/SUBSYSTEM:WINDOWS"
+    )
+endif()

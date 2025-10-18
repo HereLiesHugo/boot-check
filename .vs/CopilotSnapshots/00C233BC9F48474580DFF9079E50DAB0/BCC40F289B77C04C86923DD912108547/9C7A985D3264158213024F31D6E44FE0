@@ -1,0 +1,544 @@
+﻿// Windows Boot Parameter Checker
+// Checks Secure Boot, TPM, UEFI, and other boot parameters
+
+#define UNICODE
+#define _UNICODE
+#define WIN32_LEAN_AND_MEAN
+
+#include <windows.h>
+#include <commctrl.h>
+#include <tbs.h>
+#include <richedit.h>
+#include <string>
+#include <sstream>
+#include <vector>
+
+#pragma comment(lib, "comctl32.lib")
+#pragma comment(lib, "tbs.lib")
+#pragma comment(lib, "gdi32.lib")
+#pragma comment(lib, "uxtheme.lib")
+#pragma comment(linker,"\"/manifestdependency:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
+
+// Window dimensions
+#define WINDOW_WIDTH 750
+#define WINDOW_HEIGHT 650
+
+// Control IDs
+#define ID_REFRESH_BUTTON 1001
+#define ID_RESULTS_EDIT 1002
+#define ID_STATUS_LABEL 1003
+
+// Colors
+#define COLOR_PRIMARY RGB(0, 120, 215)       // Windows blue
+#define COLOR_SUCCESS RGB(16, 124, 16)       // Green
+#define COLOR_WARNING RGB(237, 125, 49)      // Orange
+#define COLOR_DANGER RGB(232, 17, 35)        // Red
+#define COLOR_BG_LIGHT RGB(249, 249, 249)    // Light gray
+#define COLOR_BG_DARK RGB(240, 240, 240)     // Darker gray
+#define COLOR_TEXT_DARK RGB(32, 32, 32)      // Almost black
+
+// Global variables
+HWND g_hMainWindow = NULL;
+HWND g_hResultsEdit = NULL;
+HWND g_hRefreshButton = NULL;
+HWND g_hStatusLabel = NULL;
+HFONT g_hFontTitle = NULL;
+HFONT g_hFontNormal = NULL;
+HFONT g_hFontBold = NULL;
+HFONT g_hFontMono = NULL;
+HBRUSH g_hBrushBg = NULL;
+HBRUSH g_hBrushButton = NULL;
+
+struct SecurityCheck {
+    std::wstring category;
+    std::wstring name;
+    std::wstring status;
+    int statusType; // 0 = unknown, 1 = success, 2 = warning, 3 = error
+};
+
+std::vector<SecurityCheck> g_checks;
+
+// Function declarations
+LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK ButtonProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+std::wstring CheckSecureBoot(int& statusType);
+std::wstring CheckTPM(int& statusType);
+std::wstring CheckUEFI(int& statusType);
+std::wstring CheckVirtualizationBasedSecurity(int& statusType);
+std::wstring CheckBitLocker(int& statusType);
+std::wstring CheckWindowsDefender(int& statusType);
+void PerformChecks();
+void DisplayResults();
+std::wstring GetStatusIcon(int statusType);
+COLORREF GetStatusColor(int statusType);
+
+WNDPROC g_oldButtonProc = NULL;
+
+// Custom button subclass procedure for hover effect
+LRESULT CALLBACK ButtonProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    switch (uMsg) {
+        case WM_MOUSEMOVE: {
+            TRACKMOUSEEVENT tme = { sizeof(TRACKMOUSEEVENT) };
+            tme.dwFlags = TME_LEAVE;
+            tme.hwndTrack = hwnd;
+            TrackMouseEvent(&tme);
+            InvalidateRect(hwnd, NULL, TRUE);
+            break;
+        }
+        case WM_MOUSELEAVE: {
+            InvalidateRect(hwnd, NULL, TRUE);
+            break;
+        }
+    }
+    return CallWindowProc(g_oldButtonProc, hwnd, uMsg, wParam, lParam);
+}
+
+// Get status icon
+std::wstring GetStatusIcon(int statusType) {
+    switch (statusType) {
+        case 1: return L"✓";  // Success
+        case 2: return L"⚠";  // Warning
+        case 3: return L"✗";  // Error
+        default: return L"?"; // Unknown
+    }
+}
+
+// Get status color
+COLORREF GetStatusColor(int statusType) {
+    switch (statusType) {
+        case 1: return COLOR_SUCCESS;
+        case 2: return COLOR_WARNING;
+        case 3: return COLOR_DANGER;
+        default: return RGB(128, 128, 128);
+    }
+}
+
+// Check if Secure Boot is enabled
+std::wstring CheckSecureBoot(int& statusType) {
+    DWORD secureBootEnabled = 0;
+    DWORD size = sizeof(DWORD);
+    
+    HKEY hKey;
+    if (RegOpenKeyExW(HKEY_LOCAL_MACHINE, 
+        L"SYSTEM\\CurrentControlSet\\Control\\SecureBoot\\State", 
+        0, KEY_READ, &hKey) == ERROR_SUCCESS) {
+        
+        if (RegQueryValueExW(hKey, L"UEFISecureBootEnabled", NULL, NULL, 
+            (LPBYTE)&secureBootEnabled, &size) == ERROR_SUCCESS) {
+            RegCloseKey(hKey);
+            statusType = secureBootEnabled ? 1 : 3;
+            return secureBootEnabled ? L"Enabled" : L"Disabled";
+        }
+        RegCloseKey(hKey);
+    }
+    statusType = 0;
+    return L"Unknown - Unable to read registry";
+}
+
+// Check TPM status
+std::wstring CheckTPM(int& statusType) {
+    TBS_CONTEXT_PARAMS2 contextParams;
+    contextParams.version = TBS_CONTEXT_VERSION_TWO;
+    contextParams.includeTpm12 = 0;
+    contextParams.includeTpm20 = 1;
+    
+    TBS_HCONTEXT hContext;
+    TBS_RESULT result = Tbsi_Context_Create((PCTBS_CONTEXT_PARAMS)&contextParams, &hContext);
+    
+    if (result == TBS_SUCCESS) {
+        TPM_DEVICE_INFO deviceInfo;
+        result = Tbsi_GetDeviceInfo(sizeof(deviceInfo), &deviceInfo);
+        Tbsip_Context_Close(hContext);
+        
+        if (result == TBS_SUCCESS) {
+            std::wstringstream ss;
+            ss << L"Present - TPM " << deviceInfo.tpmVersion;
+            statusType = 1;
+            return ss.str();
+        }
+    }
+    
+    if (result == TBS_E_TPM_NOT_FOUND) {
+        statusType = 3;
+        return L"Not Found";
+    }
+    
+    statusType = 2;
+    return L"Unknown - Unable to query TPM";
+}
+
+// Check if system is running in UEFI mode
+std::wstring CheckUEFI(int& statusType) {
+    FIRMWARE_TYPE firmwareType;
+    BOOL result = GetFirmwareType(&firmwareType);
+    
+    if (result) {
+        switch (firmwareType) {
+            case FirmwareTypeUefi:
+                statusType = 1;
+                return L"UEFI Mode";
+            case FirmwareTypeBios:
+                statusType = 2;
+                return L"Legacy BIOS Mode";
+            default:
+                statusType = 0;
+                return L"Unknown Firmware Type";
+        }
+    }
+    statusType = 0;
+    return L"Unknown - Unable to determine";
+}
+
+// Check Virtualization-Based Security (VBS)
+std::wstring CheckVirtualizationBasedSecurity(int& statusType) {
+    DWORD vbsEnabled = 0;
+    DWORD size = sizeof(DWORD);
+    
+    HKEY hKey;
+    if (RegOpenKeyExW(HKEY_LOCAL_MACHINE, 
+        L"SYSTEM\\CurrentControlSet\\Control\\DeviceGuard", 
+        0, KEY_READ, &hKey) == ERROR_SUCCESS) {
+        
+        if (RegQueryValueExW(hKey, L"EnableVirtualizationBasedSecurity", NULL, NULL, 
+            (LPBYTE)&vbsEnabled, &size) == ERROR_SUCCESS) {
+            RegCloseKey(hKey);
+            statusType = vbsEnabled ? 1 : 2;
+            return vbsEnabled ? L"Enabled" : L"Disabled";
+        }
+        RegCloseKey(hKey);
+    }
+    statusType = 0;
+    return L"Unknown or Not Configured";
+}
+
+// Check BitLocker status
+std::wstring CheckBitLocker(int& statusType) {
+    HKEY hKey;
+    if (RegOpenKeyExW(HKEY_LOCAL_MACHINE, 
+        L"SYSTEM\\CurrentControlSet\\Control\\BitLockerStatus", 
+        0, KEY_READ, &hKey) == ERROR_SUCCESS) {
+        
+        DWORD bootStatus = 0;
+        DWORD size = sizeof(DWORD);
+        if (RegQueryValueExW(hKey, L"BootStatus", NULL, NULL, 
+            (LPBYTE)&bootStatus, &size) == ERROR_SUCCESS) {
+            RegCloseKey(hKey);
+            statusType = bootStatus ? 1 : 2;
+            return bootStatus ? L"Enabled" : L"Disabled";
+        }
+        RegCloseKey(hKey);
+    }
+    statusType = 0;
+    return L"Unknown or Not Configured";
+}
+
+// Check Windows Defender status
+std::wstring CheckWindowsDefender(int& statusType) {
+    HKEY hKey;
+    if (RegOpenKeyExW(HKEY_LOCAL_MACHINE, 
+        L"SOFTWARE\\Microsoft\\Windows Defender\\Features", 
+        0, KEY_READ, &hKey) == ERROR_SUCCESS) {
+        
+        DWORD tamperProtection = 0;
+        DWORD size = sizeof(DWORD);
+        if (RegQueryValueExW(hKey, L"TamperProtection", NULL, NULL, 
+            (LPBYTE)&tamperProtection, &size) == ERROR_SUCCESS) {
+            RegCloseKey(hKey);
+            statusType = tamperProtection ? 1 : 2;
+            return tamperProtection ? L"Tamper Protection Enabled" : L"Tamper Protection Disabled";
+        }
+        RegCloseKey(hKey);
+    }
+    statusType = 0;
+    return L"Unknown";
+}
+
+// Perform all security checks
+void PerformChecks() {
+    SetWindowTextW(g_hStatusLabel, L"Scanning system security parameters...");
+    UpdateWindow(g_hStatusLabel);
+    
+    g_checks.clear();
+    int statusType;
+    
+    SecurityCheck check;
+    
+    // UEFI Check
+    check.category = L"Firmware";
+    check.name = L"Boot Mode";
+    check.status = CheckUEFI(statusType);
+    check.statusType = statusType;
+    g_checks.push_back(check);
+    
+    // Secure Boot
+    check.category = L"Secure Boot";
+    check.name = L"Secure Boot Status";
+    check.status = CheckSecureBoot(statusType);
+    check.statusType = statusType;
+    g_checks.push_back(check);
+    
+    // TPM
+    check.category = L"TPM";
+    check.name = L"Trusted Platform Module";
+    check.status = CheckTPM(statusType);
+    check.statusType = statusType;
+    g_checks.push_back(check);
+    
+    // VBS
+    check.category = L"Security";
+    check.name = L"Virtualization-Based Security";
+    check.status = CheckVirtualizationBasedSecurity(statusType);
+    check.statusType = statusType;
+    g_checks.push_back(check);
+    
+    // BitLocker
+    check.category = L"Encryption";
+    check.name = L"BitLocker Drive Encryption";
+    check.status = CheckBitLocker(statusType);
+    check.statusType = statusType;
+    g_checks.push_back(check);
+    
+    // Windows Defender
+    check.category = L"Antivirus";
+    check.name = L"Windows Defender";
+    check.status = CheckWindowsDefender(statusType);
+    check.statusType = statusType;
+    g_checks.push_back(check);
+    
+    DisplayResults();
+    SetWindowTextW(g_hStatusLabel, L"✓ Scan complete - All checks finished");
+}
+
+// Display results in a pretty format
+void DisplayResults() {
+    std::wstringstream ss;
+    
+    ss << L"╔═══════════════════════════════════════════════════════════════════════╗\r\n";
+    ss << L"║              🛡️  BOOT SECURITY PARAMETER CHECKER  🛡️                 ║\r\n";
+    ss << L"╚═══════════════════════════════════════════════════════════════════════╝\r\n\r\n";
+    
+    std::wstring currentCategory;
+    for (const auto& check : g_checks) {
+        if (check.category != currentCategory) {
+            if (!currentCategory.empty()) {
+                ss << L"\r\n";
+            }
+            ss << L"┌─────────────────────────────────────────────────────────────────────┐\r\n";
+            ss << L"│  " << check.category;
+            // Pad with spaces
+            int padding = 67 - check.category.length();
+            for (int i = 0; i < padding; i++) ss << L" ";
+            ss << L"│\r\n";
+            ss << L"└─────────────────────────────────────────────────────────────────────┘\r\n";
+            currentCategory = check.category;
+        }
+        
+        ss << L"  " << GetStatusIcon(check.statusType) << L"  ";
+        ss << check.name << L"\r\n";
+        ss << L"      → " << check.status << L"\r\n\r\n";
+    }
+    
+    // Summary
+    int successCount = 0;
+    int warningCount = 0;
+    int errorCount = 0;
+    int unknownCount = 0;
+    
+    for (const auto& check : g_checks) {
+        switch (check.statusType) {
+            case 1: successCount++; break;
+            case 2: warningCount++; break;
+            case 3: errorCount++; break;
+            default: unknownCount++; break;
+        }
+    }
+    
+    ss << L"╔═══════════════════════════════════════════════════════════════════════╗\r\n";
+    ss << L"║  SUMMARY                                                              ║\r\n";
+    ss << L"╠═══════════════════════════════════════════════════════════════════════╣\r\n";
+    ss << L"║  ✓ Passed:   " << successCount << L"                                                           ║\r\n";
+    ss << L"║  ⚠ Warnings: " << warningCount << L"                                                           ║\r\n";
+    ss << L"║  ✗ Failed:   " << errorCount << L"                                                           ║\r\n";
+    ss << L"║  ? Unknown:  " << unknownCount << L"                                                           ║\r\n";
+    ss << L"╚═══════════════════════════════════════════════════════════════════════╝\r\n";
+    
+    SetWindowTextW(g_hResultsEdit, ss.str().c_str());
+}
+
+// Window procedure
+LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    switch (uMsg) {
+        case WM_CREATE: {
+            // Create brushes
+            g_hBrushBg = CreateSolidBrush(COLOR_BG_LIGHT);
+            g_hBrushButton = CreateSolidBrush(COLOR_PRIMARY);
+            
+            // Create fonts
+            g_hFontTitle = CreateFontW(24, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE, 
+                DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, 
+                CLEARTYPE_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Segoe UI");
+            
+            g_hFontNormal = CreateFontW(18, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, 
+                DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, 
+                CLEARTYPE_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Segoe UI");
+            
+            g_hFontBold = CreateFontW(18, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE, 
+                DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, 
+                CLEARTYPE_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Segoe UI");
+            
+            g_hFontMono = CreateFontW(16, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, 
+                DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, 
+                CLEARTYPE_QUALITY, FIXED_PITCH | FF_MODERN, L"Consolas");
+            
+            // Create status label
+            g_hStatusLabel = CreateWindowW(
+                L"STATIC", L"Ready to scan...",
+                WS_VISIBLE | WS_CHILD | SS_LEFT,
+                30, 90, WINDOW_WIDTH - 80, 25,
+                hwnd, (HMENU)ID_STATUS_LABEL, NULL, NULL
+            );
+            SendMessageW(g_hStatusLabel, WM_SETFONT, (WPARAM)g_hFontNormal, TRUE);
+            
+            // Create refresh button with modern style
+            g_hRefreshButton = CreateWindowW(
+                L"BUTTON", L"🔄  Scan System Security",
+                WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON | BS_CENTER,
+                30, 30, 280, 50,
+                hwnd, (HMENU)ID_REFRESH_BUTTON, NULL, NULL
+            );
+            SendMessageW(g_hRefreshButton, WM_SETFONT, (WPARAM)g_hFontBold, TRUE);
+            
+            // Subclass button for hover effect
+            g_oldButtonProc = (WNDPROC)SetWindowLongPtrW(g_hRefreshButton, 
+                GWLP_WNDPROC, (LONG_PTR)ButtonProc);
+            
+            // Create results edit control with border
+            g_hResultsEdit = CreateWindowExW(
+                WS_EX_CLIENTEDGE, L"EDIT", L"",
+                WS_VISIBLE | WS_CHILD | WS_VSCROLL | 
+                ES_MULTILINE | ES_READONLY | ES_AUTOVSCROLL,
+                30, 130, WINDOW_WIDTH - 80, WINDOW_HEIGHT - 190,
+                hwnd, (HMENU)ID_RESULTS_EDIT, NULL, NULL
+            );
+            SendMessageW(g_hResultsEdit, WM_SETFONT, (WPARAM)g_hFontMono, TRUE);
+            
+            // Set background color for edit control
+            SendMessageW(g_hResultsEdit, EM_SETBKGNDCOLOR, 0, RGB(255, 255, 255));
+            
+            // Initial check
+            PerformChecks();
+            break;
+        }
+        
+        case WM_CTLCOLORSTATIC: {
+            HDC hdcStatic = (HDC)wParam;
+            if ((HWND)lParam == g_hStatusLabel) {
+                SetTextColor(hdcStatic, COLOR_PRIMARY);
+                SetBkColor(hdcStatic, COLOR_BG_LIGHT);
+                return (LRESULT)g_hBrushBg;
+            }
+            break;
+        }
+        
+        case WM_CTLCOLORBTN: {
+            return (LRESULT)g_hBrushButton;
+        }
+        
+        case WM_COMMAND: {
+            if (LOWORD(wParam) == ID_REFRESH_BUTTON) {
+                PerformChecks();
+            }
+            break;
+        }
+        
+        case WM_DESTROY: {
+            if (g_hFontTitle) DeleteObject(g_hFontTitle);
+            if (g_hFontNormal) DeleteObject(g_hFontNormal);
+            if (g_hFontBold) DeleteObject(g_hFontBold);
+            if (g_hFontMono) DeleteObject(g_hFontMono);
+            if (g_hBrushBg) DeleteObject(g_hBrushBg);
+            if (g_hBrushButton) DeleteObject(g_hBrushButton);
+            PostQuitMessage(0);
+            break;
+        }
+        
+        case WM_SIZE: {
+            // Resize controls when window is resized
+            RECT rect;
+            GetClientRect(hwnd, &rect);
+            
+            MoveWindow(g_hRefreshButton, 30, 30, 280, 50, TRUE);
+            MoveWindow(g_hStatusLabel, 30, 90, rect.right - 60, 25, TRUE);
+            MoveWindow(g_hResultsEdit, 30, 130, 
+                rect.right - 60, rect.bottom - 160, TRUE);
+            break;
+        }
+        
+        case WM_ERASEBKGND: {
+            HDC hdc = (HDC)wParam;
+            RECT rect;
+            GetClientRect(hwnd, &rect);
+            FillRect(hdc, &rect, g_hBrushBg);
+            return 1;
+        }
+        
+        default:
+            return DefWindowProcW(hwnd, uMsg, wParam, lParam);
+    }
+    return 0;
+}
+
+// WinMain - Application entry point
+int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, 
+                    PWSTR pCmdLine, int nCmdShow) {
+    
+    // Initialize common controls
+    INITCOMMONCONTROLSEX icex;
+    icex.dwSize = sizeof(INITCOMMONCONTROLSEX);
+    icex.dwICC = ICC_STANDARD_CLASSES;
+    InitCommonControlsEx(&icex);
+    
+    // Register window class
+    const wchar_t CLASS_NAME[] = L"BootCheckWindowClass";
+    
+    WNDCLASSW wc = {};
+    wc.lpfnWndProc = WindowProc;
+    wc.hInstance = hInstance;
+    wc.lpszClassName = CLASS_NAME;
+    wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+    wc.hbrBackground = CreateSolidBrush(COLOR_BG_LIGHT);
+    wc.hIcon = LoadIcon(NULL, IDI_SHIELD);
+    
+    RegisterClassW(&wc);
+    
+    // Create window with shadow
+    g_hMainWindow = CreateWindowExW(
+        WS_EX_APPWINDOW, CLASS_NAME, L"🛡️ Boot Security Checker",
+        WS_OVERLAPPEDWINDOW,
+        CW_USEDEFAULT, CW_USEDEFAULT, WINDOW_WIDTH, WINDOW_HEIGHT,
+        NULL, NULL, hInstance, NULL
+    );
+    
+    if (g_hMainWindow == NULL) {
+        return 0;
+    }
+    
+    // Center window on screen
+    RECT rect;
+    GetWindowRect(g_hMainWindow, &rect);
+    int x = (GetSystemMetrics(SM_CXSCREEN) - (rect.right - rect.left)) / 2;
+    int y = (GetSystemMetrics(SM_CYSCREEN) - (rect.bottom - rect.top)) / 2;
+    SetWindowPos(g_hMainWindow, NULL, x, y, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+    
+    ShowWindow(g_hMainWindow, nCmdShow);
+    UpdateWindow(g_hMainWindow);
+    
+    // Message loop
+    MSG msg = {};
+    while (GetMessage(&msg, NULL, 0, 0)) {
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
+    
+    return (int)msg.wParam;
+}

@@ -1,0 +1,81 @@
+# Boot Security Parameter Checker
+
+A Windows GUI application that checks important boot and security parameters on your system.
+
+## Features
+
+This application checks the following boot and security parameters:
+
+- **UEFI Mode**: Verifies if the system is running in UEFI or Legacy BIOS mode
+- **Secure Boot**: Checks if Secure Boot is enabled
+- **TPM (Trusted Platform Module)**: Detects TPM presence and version
+- **Virtualization-Based Security (VBS)**: Checks if VBS is enabled
+- **BitLocker**: Verifies BitLocker encryption status
+- **Windows Defender**: Checks Tamper Protection status
+
+## Building the Application
+
+### Using CMake (Recommended)
+
+```batch
+mkdir build
+cd build
+cmake ..
+cmake --build . --config Release
+```
+
+### Using Visual Studio
+
+1. Open Developer Command Prompt for Visual Studio
+2. Navigate to the project directory
+3. Run:
+```batch
+cl /EHsc /W3 main.cpp /link comctl32.lib tbs.lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS
+```
+
+### Using MinGW
+
+```batch
+g++ -municode -mwindows main.cpp -o BootCheck.exe -lcomctl32 -ltbs -lgdi32
+```
+
+## Usage
+
+1. Run the `BootCheck.exe` executable
+2. The application will automatically check all boot parameters on startup
+3. Click the "Check Boot Parameters" button to refresh the results
+4. Review the security status of your system
+
+## Requirements
+
+- Windows 7 or later (Windows 10/11 recommended)
+- Administrator privileges may be required for some checks
+- TPM hardware (for TPM checks)
+
+## Security Parameters Explained
+
+### Secure Boot
+Secure Boot helps protect your system from malware by only allowing trusted operating systems to boot. **Status: Enabled** is recommended for maximum security.
+
+### TPM
+Trusted Platform Module is a hardware security chip that provides cryptographic functions. Required for Windows 11 and BitLocker.
+
+### UEFI Mode
+UEFI is the modern replacement for Legacy BIOS and provides better security features including Secure Boot support.
+
+### Virtualization-Based Security (VBS)
+VBS uses hardware virtualization to create isolated regions of memory, protecting critical system components from malware.
+
+### BitLocker
+Full disk encryption that protects your data if your device is lost or stolen.
+
+## Note
+
+Some features may show as "UNKNOWN" if:
+- The feature is not configured on your system
+- You need administrator privileges to read certain registry keys
+- The feature is not available on your Windows version
+
+## License
+
+This is free and open-source software.

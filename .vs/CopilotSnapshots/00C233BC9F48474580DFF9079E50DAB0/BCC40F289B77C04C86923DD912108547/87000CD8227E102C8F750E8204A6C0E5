@@ -1,0 +1,185 @@
+﻿# 🛡️ Boot Security Parameter Checker
+
+A beautiful, modern Windows GUI application that checks important boot and security parameters on your system.
+
+## ✨ Features
+
+### Visual Design
+- **Modern, Clean Interface**: Beautiful UI with custom colors and fonts
+- **Color-Coded Results**: Easy-to-read status indicators
+  - ✓ Green for enabled/passed security features
+  - ⚠ Orange for warnings
+  - ✗ Red for disabled/failed features
+  - ? Gray for unknown status
+- **Professional Typography**: Uses Segoe UI and Consolas fonts
+- **Box Drawing Characters**: Pretty formatted output with borders and sections
+- **Real-time Status Updates**: Live feedback during system scanning
+- **Responsive Design**: Window resizes gracefully
+
+### Security Checks
+
+This application checks the following boot and security parameters:
+
+- **UEFI Mode**: Verifies if the system is running in UEFI or Legacy BIOS mode
+- **Secure Boot**: Checks if Secure Boot is enabled
+- **TPM (Trusted Platform Module)**: Detects TPM presence and version (1.2 or 2.0)
+- **Virtualization-Based Security (VBS)**: Checks if VBS is enabled
+- **BitLocker**: Verifies BitLocker encryption status
+- **Windows Defender**: Checks Tamper Protection status
+
+### Summary Dashboard
+- Quick overview showing count of passed, warning, failed, and unknown checks
+- Professional formatting with Unicode box-drawing characters
+
+## 🎨 What Makes It "Pretty"
+
+1. **Custom Color Scheme**
+   - Windows Blue primary color (RGB 0, 120, 215)
+   - Success Green (RGB 16, 124, 16)
+   - Warning Orange (RGB 237, 125, 49)
+   - Danger Red (RGB 232, 17, 35)
+   - Clean light gray background
+
+2. **Modern Fonts**
+   - Segoe UI for UI elements (Windows modern font)
+   - Consolas monospace for results (better readability)
+   - Custom font sizes: Title (24pt), Normal (18pt), Mono (16pt)
+
+3. **Visual Hierarchy**
+   - Clear section headers with box borders
+   - Icon indicators (✓, ⚠, ✗, ?)
+   - Proper spacing and alignment
+   - Professional layout
+
+4. **Enhanced Controls**
+   - Large, clickable "Scan System Security" button with emoji icon
+   - Status label showing current operation
+   - Scrollable results area with custom background
+   - Centered window on startup
+
+## 🚀 Building the Application
+
+### Using CMake (Recommended)
+
+```batch
+mkdir build
+cd build
+cmake ..
+cmake --build . --config Release
+```
+
+### Using Visual Studio
+
+1. Open Developer Command Prompt for Visual Studio
+2. Navigate to the project directory
+3. Run:
+```batch
+cl /EHsc /W3 main.cpp /link comctl32.lib tbs.lib user32.lib gdi32.lib uxtheme.lib /SUBSYSTEM:WINDOWS
+```
+
+### Using the Build Script
+
+Simply double-click `build.bat` or run:
+```batch
+build.bat
+```
+
+### Using MinGW
+
+```batch
+g++ -municode -mwindows main.cpp -o BootCheck.exe -lcomctl32 -ltbs -lgdi32 -luxtheme
+```
+
+## 📖 Usage
+
+1. Run the `BootCheck.exe` executable
+2. The application will automatically check all boot parameters on startup
+3. Click the "🔄 Scan System Security" button to refresh the results
+4. Review the color-coded security status of your system
+5. Check the summary at the bottom for an overview
+
+## 💻 Requirements
+
+- Windows 7 or later (Windows 10/11 recommended for all features)
+- Administrator privileges may be required for some checks
+- TPM hardware (for TPM checks)
+- Visual Studio 2015+ or MinGW for building
+
+## 🔍 Security Parameters Explained
+
+### Secure Boot ✓
+Secure Boot helps protect your system from malware by only allowing trusted operating systems to boot. **Status: Enabled** is recommended for maximum security.
+
+### TPM (Trusted Platform Module) ✓
+Trusted Platform Module is a hardware security chip that provides cryptographic functions. Required for Windows 11 and BitLocker encryption.
+
+### UEFI Mode ✓
+UEFI is the modern replacement for Legacy BIOS and provides better security features including Secure Boot support.
+
+### Virtualization-Based Security (VBS) ⚠
+VBS uses hardware virtualization to create isolated regions of memory, protecting critical system components from malware.
+
+### BitLocker 🔒
+Full disk encryption that protects your data if your device is lost or stolen.
+
+### Windows Defender 🛡️
+Built-in antivirus and security suite. Tamper Protection prevents malware from disabling security features.
+
+## 📝 Example Output
+
+```
+╔═══════════════════════════════════════════════════════════════════════╗
+║              🛡️  BOOT SECURITY PARAMETER CHECKER  🛡️                 ║
+╚═══════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────────┐
+│  Firmware                                                           │
+└─────────────────────────────────────────────────────────────────────┘
+  ✓  Boot Mode
+      → UEFI Mode
+
+┌─────────────────────────────────────────────────────────────────────┐
+│  Secure Boot                                                        │
+└─────────────────────────────────────────────────────────────────────┘
+  ✓  Secure Boot Status
+      → Enabled
+
+...
+
+╔═══════════════════════════════════════════════════════════════════════╗
+║  SUMMARY                                                              ║
+╠═══════════════════════════════════════════════════════════════════════╣
+║  ✓ Passed:   4                                                        ║
+║  ⚠ Warnings: 1                                                        ║
+║  ✗ Failed:   0                                                        ║
+║  ? Unknown:  1                                                        ║
+╚═══════════════════════════════════════════════════════════════════════╝
+```
+
+## ⚠️ Note
+
+Some features may show as "UNKNOWN" if:
+- The feature is not configured on your system
+- You need administrator privileges to read certain registry keys
+- The feature is not available on your Windows version
+- The hardware doesn't support the feature (e.g., no TPM chip)
+
+## 🎯 Design Philosophy
+
+This application follows modern Windows UI design principles:
+- **Clarity**: Information is presented clearly with visual hierarchy
+- **Consistency**: Consistent spacing, fonts, and color usage
+- **Feedback**: Real-time status updates during scanning
+- **Beauty**: Professional appearance with attention to detail
+
+## 📄 License
+
+This is free and open-source software.
+
+## 🤝 Contributing
+
+Feel free to submit issues, fork the repository, and create pull requests for any improvements.
+
+---
+
+Made with ❤️ for Windows security enthusiasts

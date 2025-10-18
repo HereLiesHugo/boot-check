@@ -1,0 +1,36 @@
+﻿@echo off
+echo Building Boot Security Parameter Checker...
+echo.
+
+REM Check if cl.exe is available
+where cl.exe >nul 2>&1
+if %ERRORLEVEL% NEQ 0 (
+    echo Visual Studio compiler not found in PATH.
+    echo Please run this from a Visual Studio Developer Command Prompt.
+    echo.
+    echo Alternatively, you can use CMake:
+    echo   mkdir build
+    echo   cd build
+    echo   cmake ..
+    echo   cmake --build . --config Release
+    pause
+    exit /b 1
+)
+
+REM Compile the application
+cl /EHsc /W3 /O2 main.cpp /link comctl32.lib tbs.lib user32.lib gdi32.lib /SUBSYSTEM:WINDOWS /OUT:BootCheck.exe
+
+if %ERRORLEVEL% EQU 0 (
+    echo.
+    echo ========================================
+    echo Build successful!
+    echo Executable: BootCheck.exe
+    echo ========================================
+    echo.
+    echo Run BootCheck.exe to check your boot parameters.
+) else (
+    echo.
+    echo Build failed! Please check the errors above.
+)
+
+pause
