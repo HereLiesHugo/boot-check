@@ -1,3 +1,5 @@
 # ninja log v6
 7	746	7825105793065519	CMakeFiles/BootCheck.dir/main.cpp.obj	dfa295d99d2a359f
 747	1083	7825105800469770	BootCheck.exe	f4555fd440e2d5ee
+7	608	7825110617923702	CMakeFiles/BootCheck.dir/main.cpp.obj	dfa295d99d2a359f
+609	894	7825110623943232	BootCheck.exe	80f6d5288df7eb4b

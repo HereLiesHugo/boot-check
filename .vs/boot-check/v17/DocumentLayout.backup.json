@@ -54,8 +54,7 @@
               "RelativeToolTip": "build.bat",
               "ViewState": "AgIAACQAAAAAAAAAAAAAACQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000614|",
-              "WhenOpened": "2025-10-18T17:04:43.946Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-18T17:04:43.946Z"
             },
             {
               "$type": "Document",
@@ -67,8 +66,7 @@
               "RelativeToolTip": "README.md",
               "ViewState": "AgIAAAAAAAAAAAAAAAAxwFEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2025-10-18T17:04:36.291Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-18T17:04:36.291Z"
             },
             {
               "$type": "Document",
@@ -77,8 +75,7 @@
               "DocumentMoniker": "CMake Overview Pages",
               "ToolTip": "CMake Overview Pages",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-10-18T17:04:26.194Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-18T17:04:26.194Z"
             },
             {
               "$type": "Document",
@@ -90,8 +87,7 @@
               "RelativeToolTip": "CMakeLists.txt",
               "ViewState": "AgIAAAAAAAAAAAAAAAAxwBUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-10-18T17:04:21.903Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-18T17:04:21.903Z"
             }
           ]
         }
