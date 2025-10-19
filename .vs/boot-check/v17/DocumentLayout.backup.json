@@ -3,6 +3,26 @@
   "WorkspaceRootPath": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\build_production.ps1||{3B902123-F8A7-4915-9F01-361F908088D0}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:build_production.ps1||{3B902123-F8A7-4915-9F01-361F908088D0}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\clean.ps1||{3B902123-F8A7-4915-9F01-361F908088D0}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:clean.ps1||{3B902123-F8A7-4915-9F01-361F908088D0}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\final\\README.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:final\\README.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -14,12 +34,28 @@
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|CMake Overview Pages||{B1CAA5B0-FEB1-4350-8AB9-F895876842F2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}|",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}|"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\build_production.bat||{3B902123-F8A7-4915-9F01-361F908088D0}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:build_production.bat||{3B902123-F8A7-4915-9F01-361F908088D0}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\build_production.sh||{3B902123-F8A7-4915-9F01-361F908088D0}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:build_production.sh||{3B902123-F8A7-4915-9F01-361F908088D0}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\deploy.ps1||{3B902123-F8A7-4915-9F01-361F908088D0}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:deploy.ps1||{3B902123-F8A7-4915-9F01-361F908088D0}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\clean.bat||{3B902123-F8A7-4915-9F01-361F908088D0}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:clean.bat||{3B902123-F8A7-4915-9F01-361F908088D0}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\QUICKSTART.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:QUICKSTART.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -29,48 +65,154 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "QUICKSTART.md",
+              "DocumentMoniker": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\QUICKSTART.md",
+              "RelativeDocumentMoniker": "QUICKSTART.md",
+              "ToolTip": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\QUICKSTART.md",
+              "RelativeToolTip": "QUICKSTART.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-10-19T17:07:00.415Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "clean.bat",
+              "DocumentMoniker": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\clean.bat",
+              "RelativeDocumentMoniker": "clean.bat",
+              "ToolTip": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\clean.bat",
+              "RelativeToolTip": "clean.bat",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000614|",
+              "WhenOpened": "2025-10-19T17:04:46.528Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "clean.ps1",
+              "DocumentMoniker": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\clean.ps1",
+              "RelativeDocumentMoniker": "clean.ps1",
+              "ToolTip": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\clean.ps1",
+              "RelativeToolTip": "clean.ps1",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002383|",
+              "WhenOpened": "2025-10-19T17:04:40.789Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "README.txt",
+              "DocumentMoniker": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\final\\README.txt",
+              "RelativeDocumentMoniker": "final\\README.txt",
+              "ToolTip": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\final\\README.txt",
+              "RelativeToolTip": "final\\README.txt",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2025-10-19T17:03:56.705Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": ".gitignore",
+              "DocumentMoniker": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\.gitignore",
+              "RelativeDocumentMoniker": ".gitignore",
+              "ToolTip": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\.gitignore",
+              "RelativeToolTip": ".gitignore",
+              "ViewState": "AgIAAEEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001407|",
+              "WhenOpened": "2025-10-19T17:03:30.992Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "deploy.ps1",
+              "DocumentMoniker": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\deploy.ps1",
+              "RelativeDocumentMoniker": "deploy.ps1",
+              "ToolTip": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\deploy.ps1",
+              "RelativeToolTip": "deploy.ps1",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002383|",
+              "WhenOpened": "2025-10-19T17:03:20.305Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "build_production.ps1",
+              "DocumentMoniker": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\build_production.ps1",
+              "RelativeDocumentMoniker": "build_production.ps1",
+              "ToolTip": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\build_production.ps1",
+              "RelativeToolTip": "build_production.ps1",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAAD8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002383|",
+              "WhenOpened": "2025-10-19T17:03:08.956Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "build_production.sh",
+              "DocumentMoniker": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\build_production.sh",
+              "RelativeDocumentMoniker": "build_production.sh",
+              "ToolTip": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\build_production.sh",
+              "RelativeToolTip": "build_production.sh",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000614|",
+              "WhenOpened": "2025-10-19T17:03:00.092Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "build_production.bat",
+              "DocumentMoniker": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\build_production.bat",
+              "RelativeDocumentMoniker": "build_production.bat",
+              "ToolTip": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\build_production.bat",
+              "RelativeToolTip": "build_production.bat",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000614|",
+              "WhenOpened": "2025-10-19T17:02:55.501Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "main.cpp",
               "DocumentMoniker": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\main.cpp",
               "RelativeDocumentMoniker": "main.cpp",
               "ToolTip": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\main.cpp",
               "RelativeToolTip": "main.cpp",
-              "ViewState": "AgIAAB0BAAAAAAAAAAAAADgBAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABABAAAAAAAAAAAqwDgBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-10-18T17:05:00.065Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "build.bat",
-              "DocumentMoniker": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\build.bat",
-              "RelativeDocumentMoniker": "build.bat",
-              "ToolTip": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\build.bat",
-              "RelativeToolTip": "build.bat",
-              "ViewState": "AgIAACQAAAAAAAAAAAAAACQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000614|",
-              "WhenOpened": "2025-10-18T17:04:43.946Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "README.md",
               "DocumentMoniker": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\README.md",
               "RelativeDocumentMoniker": "README.md",
               "ToolTip": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\README.md",
               "RelativeToolTip": "README.md",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAxwFEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAJgAAAAAAAAAAIBJwJoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2025-10-18T17:04:36.291Z"
+              "WhenOpened": "2025-10-18T17:04:36.291Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "CMake Overview Pages",
               "DocumentMoniker": "CMake Overview Pages",
               "ToolTip": "CMake Overview Pages",
@@ -79,15 +221,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "CMakeLists.txt",
               "DocumentMoniker": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\CMakeLists.txt",
               "RelativeDocumentMoniker": "CMakeLists.txt",
               "ToolTip": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\CMakeLists.txt",
               "RelativeToolTip": "CMakeLists.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAxwBUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAF4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-10-18T17:04:21.903Z"
+              "WhenOpened": "2025-10-18T17:04:21.903Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "build.bat",
+              "DocumentMoniker": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\build.bat",
+              "RelativeDocumentMoniker": "build.bat",
+              "ToolTip": "C:\\Users\\gggam\\OneDrive\\Documents\\Github\\boot-check\\build.bat",
+              "RelativeToolTip": "build.bat",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAACQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000614|",
+              "WhenOpened": "2025-10-18T17:04:43.946Z"
             }
           ]
         }

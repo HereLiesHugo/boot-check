@@ -14,7 +14,6 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
 
 # Fortran module files
 *.mod
@@ -26,7 +25,41 @@
 *.a
 *.lib
 
-# Executables
+# Executables (except in final directory)
 *.exe
 *.out
 *.app
+
+# CMake build directory
+build/
+cmake-build-*/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+
+# IDE specific
+.vs/
+.vscode/
+*.user
+*.suo
+*.sdf
+*.opensdf
+*.opendb
+*.VC.db
+*.VC.opendb
+
+# Distribution packages
+*.zip
+*.tar.gz
+*.7z
+
+# Keep final directory contents but ignore it from git
+# (comment out the next line if you want to track final builds)
+final/*
+!final/README.txt
+
+# OS specific
+.DS_Store
+Thumbs.db
+desktop.ini
